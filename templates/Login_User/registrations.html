@@ -4,7 +4,7 @@
 <!-------------------------------- Bootstrap-icon link -------------------------------->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 <!-------------------------------- CSS link -------------------------------->
-<link rel="stylesheet" href="{% static 'Login_User/login.css'%}">
+<link rel="stylesheet" href="{% static 'Login_User/css/login.css'%}">
 {% endblock %}
 
 {% block body%}
@@ -16,7 +16,11 @@
             alt="Sample image">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 mt-5">
-          <form>
+          <form method="post" action="{% url 'Login_User:registrations'%}">
+            {% csrf_token %}
+            <div class="{{class}}" role="alert">
+              <strong></strong> {{message}}.
+            </div>
             <!-- user name input -->
             <div class="form-outline mb-4">
               <input type="text" name="username" id="form3Example3" class="form-control form-control-lg"
@@ -35,8 +39,8 @@
             </div>
   
             <div class="text-center text-lg-start mt-4 pt-2">
-              <button type="button" class="btn btn-primary btn-lg"
-                style="padding-left: 2.5rem; padding-right: 2.5rem;">Register</button>
+              <input type="submit" class="btn btn-primary btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;" value="Registrations">
               <p class="small fw-bold mt-2 pt-1 mb-0 mt-5">I have an account? <a href="{% url 'Login_User:login' %}"
                   class="link-danger">Login</a></p>
             </div>
