@@ -84,7 +84,6 @@ def Update_Profile(request, username):
 def update_user(request,username):
     if request.user.is_authenticated:
         current_user=request.user
-        print(current_user)
         user_id=current_user.id
         user_profile_info=UserProfile.objects.get(user__pk=user_id)
         user_profile_info_id=user_profile_info.id
