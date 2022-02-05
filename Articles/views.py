@@ -40,7 +40,14 @@ class CreateBlog(LoginRequiredMixin, CreateView):
 @login_required
 def aticle_details(request,slug):
     blog=Blog.objects.get(slug=slug)
-
+    if request.method=='POST':
+        message=request.POST.get("message")
+        blog=blog
+        user=request.user
+        print(user)
+        comments=comment(user=user,blog=blog,comment=message)
+        comments.save()
+        return HttpResponseRedirect(reverse("Articles:aticle_details", kwargs={'slug':slug}))
         
     comments=comment.objects.all()
     context={"blog":blog, "comments":comments}
