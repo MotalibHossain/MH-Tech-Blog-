@@ -64,6 +64,7 @@ def logout_view(request):
 def Profile(request, username):
     user_info=get_list_or_404(User, username=username)
     posted_articles=Blog.objects.filter(author=request.user)
+    
     if request.user.is_authenticated:
         current_user=request.user
         user_id=current_user.id
@@ -119,5 +120,20 @@ class UpdateBlog(LoginRequiredMixin, UpdateView):
     fields=('title','blog_content','blog_image')
 
     def get_success_url(self, **kwargs):
-        # return reverse_lazy("Articles:Home")
         return reverse_lazy("Articles:aticle_details", kwargs={'slug':self.object.slug})
+
+
+def delete_blog(request,pk):
+    post=Blog.objects.filter(pk=pk)
+
+    for i in post:
+        author=i.author
+
+    user=request.user
+    if author== user:
+        post.delete()
+        return HttpResponseRedirect(reverse('Login_User:Profile', kwargs={'username':user.username}))
+    else:
+        message="You can't delete this post. Because you are not author this post."
+        return render(request, 'Login_user/profile.html', {"message":message})
+        # return HttpResponseRedirect(reverse('Login_User:Profile', kwargs={'username':user.username}))

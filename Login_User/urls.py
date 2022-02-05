@@ -1,5 +1,5 @@
 from django.urls import path, include
-from Login_User.views import login, registrations, Profile,logout_view,Update_Profile,update_user, UpdateBlog
+from Login_User.views import login, registrations, Profile,logout_view,Update_Profile,update_user, UpdateBlog, delete_blog
 
 app_name="Login_User"
 urlpatterns = [
@@ -11,5 +11,6 @@ urlpatterns = [
     path('update_user/<str:username>', update_user, name="update_user"),
     # path('edit_blog/<pk>', EditBlog, name="EditBlog"),
     path('edit_blog/<pk>', UpdateBlog.as_view(), name="EditBlog"),
+    path('delete_blog/<pk>', delete_blog, name="delete_blog"),
 
 ]

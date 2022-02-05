@@ -22,7 +22,12 @@
                                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png" title="" alt="">
                             </div>
                             <div class="media-body">
-                                <label>{{blog.author}}</label>
+                                <label>
+                                    <a href="{{user_profile_info.get_absulate_url}}">
+                                        {{user_profile_info}}
+                                        {{blog.author}}
+                                    </a>
+                                </label>
                                 <span>{{blog.publish_date}}</span>
                             </div>
                         </div>
@@ -108,7 +113,7 @@
                                 <h6>Hello, I'm<br>{{blog.author}}</h6>
                             </div>
                         </div>
-                        <p>{{user_profile.bio}}</p>
+                        <p>{{current_user.bio}} ki</p>
                     </div>
                 </div>
                 <!-- End Author -->

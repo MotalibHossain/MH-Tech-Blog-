@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
+from Login_User.models import UserProfile
 from Articles.models import Blog, comment, like
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -40,10 +41,15 @@ class CreateBlog(LoginRequiredMixin, CreateView):
         form_obj.save()
         return redirect(reverse_lazy('Articles:Home'))
 
-        
+
 @login_required
 def aticle_details(request,slug):
     blog=Blog.objects.get(slug=slug)
+    blog_author=blog.author
+    user_id=blog_author.id
+    user_profile_info=UserProfile.objects.get(user__pk=user_id)
+
+
     if request.method=='POST':
         message=request.POST.get("message")
         blog=blog
@@ -59,7 +65,9 @@ def aticle_details(request,slug):
         liked=True
     else:
         liked=False
-    context={"blog":blog, "comments":comments, "liked":liked}
+        
+
+    context={"blog":blog, "comments":comments, "liked":liked,"user_profile_info":user_profile_info}
     return render(request, 'Articles/articles_details.html', context)
 
 
