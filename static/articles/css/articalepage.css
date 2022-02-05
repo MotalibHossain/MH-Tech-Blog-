@@ -243,6 +243,10 @@ body{margin-top:20px;}
 .article-content{
   text-align: justify;
 }
+.col.like {
+  font-size: 40px;
+  cursor: pointer;
+}
 .article .article-content blockquote p {
   font-size: 20px;
   font-weight: 500;

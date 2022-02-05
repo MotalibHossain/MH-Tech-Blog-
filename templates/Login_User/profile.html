@@ -43,7 +43,9 @@
                                 <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Your Post Informations.</h6>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        
+                                        {% for post in posted_articles %}
+                                        <li>{{post}}</li>
+                                        {% endfor %}
                                     </div>
                                     <div class="col-sm-6">
                                         

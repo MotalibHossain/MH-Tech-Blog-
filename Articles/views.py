@@ -50,5 +50,32 @@ def aticle_details(request,slug):
         return HttpResponseRedirect(reverse("Articles:aticle_details", kwargs={'slug':slug}))
         
     comments=comment.objects.all()
-    context={"blog":blog, "comments":comments}
+    already_like=like.objects.filter(blog=blog, user=request.user)
+    if already_like:
+        liked=True
+    else:
+        liked=False
+    context={"blog":blog, "comments":comments, "liked":liked}
     return render(request, 'Articles/articles_details.html', context)
+
+
+@login_required
+def liked(request,pk):
+    blog=Blog.objects.get(pk=pk)
+    user=request.user
+    already_liked=like.objects.filter(user=user, blog=blog)
+    print(already_liked)
+    if not already_liked:
+        like_post=like(user=user, blog=blog)
+        like_post.save()
+
+    return HttpResponseRedirect(reverse("Articles:aticle_details", kwargs={'slug':blog.slug}))
+
+
+@login_required
+def unlike(request,pk):
+    blog=Blog.objects.get(pk=pk)
+    user=request.user
+    already_liked=like.objects.filter(user=user, blog=blog)
+    already_liked.delete()
+    return HttpResponseRedirect(reverse("Articles:aticle_details", kwargs={'slug':blog.slug}))

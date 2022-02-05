@@ -39,18 +39,40 @@
                         <a href="#">Research</a>
                         <a href="#">Managment</a>
                     </div>
-                </article>
-                <div class="article-comment mb-3">
+                    <hr>
                     <div class="row">
-                        {% for i in comments %}
+                        <div class="col-lg-6 like">
+                            {% if not liked %}
+                            <a href="{% url 'Articles:liked' pk=blog.pk%}">
+                                <i class="fas fa-thumbs-up"></i>
+                            </a>
+                            {% else %}
+                            <a href="{% url 'Articles:unlike' pk=blog.pk%}">
+                                <i class="fas fa-thumbs-down"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="float-end">
+                                <i class="fas fa-thumbs-up"></i>{{blog.blog_like.count}} &nbsp; 
+                                <i class="fas fa-comment"></i>
+                                {{blog.blog_comment.count}}
+                            </div>
+                            
+                        </div>
+                    </div>
+                </article>
+                <div class="row">
+                    {% for i in comments %}
+                    <div class="article-comment mb-3">
                         <div class="col-lg-6">
                             {{i.user}}
                         </div>
                         <div class="col-lg-6">
                             {{i.comment}}
                         </div>
-                        {% endfor %}
                     </div>
+                    {% endfor %}
                 </div>
                 <div class="contact-form article-comment">
                     <h4>Leave a Reply</h4>
@@ -190,5 +212,5 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
 {% endblock %}

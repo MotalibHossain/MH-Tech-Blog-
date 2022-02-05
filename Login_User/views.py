@@ -1,8 +1,9 @@
 from django.shortcuts import redirect, render, get_list_or_404
-from django.urls import reverse_lazy
-from django.http import HttpResponse
+from django.urls import reverse_lazy, reverse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from Login_User.models import UserProfile
+from Articles.models import Blog
 from django.contrib.auth import authenticate, login as auth_login, logout
 
 
@@ -60,13 +61,14 @@ def logout_view(request):
 
 def Profile(request, username):
     user_info=get_list_or_404(User, username=username)
+    posted_articles=Blog.objects.filter(author=request.user)
     if request.user.is_authenticated:
         current_user=request.user
         user_id=current_user.id
         user_profile_info=UserProfile.objects.get(user__pk=user_id)
 
 
-    context={"user_info":user_info, "user_profile_info":user_profile_info}
+    context={"user_info":user_info, "user_profile_info":user_profile_info, "posted_articles":posted_articles}
     return render(request, 'Login_user/profile.html',context)
 
 
@@ -98,6 +100,6 @@ def update_user(request,username):
 
         user=User.objects.filter(id=user_id).update(username=username)
         UserProfile.objects.filter(pk=user_profile_info_id).update(phone=phone, bio=bio, address=address)
-        return redirect(reverse_lazy('Articles:Home'))
+        return HttpResponseRedirect(reverse('Login_User:Profile', kwargs={'username':username}))
     
     return render(request, 'Login_user/UpdateProfile.html')
