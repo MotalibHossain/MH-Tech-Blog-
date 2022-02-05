@@ -13,17 +13,17 @@
             <!-- Featured blog post-->
             <div class="card mb-4">
                 <a class="card_image" href="#!"
-                    ><img class="card-img-top" src="media/{{blogs.0.blog_image}}" alt="..."/>
+                    ><img class="card-img-top" src="media/{{latest_blog.0.blog_image}}" alt="..."/>
                 </a>
                 <div class="card-body">
                     <div class="small text-muted">January 1, 2021</div>
-                    <a href="#">
-                        <h2  class="card-title">{{blogs.0.title}}</h2>
+                    <a href="{{latest_blog.0.get_absulate_url}}">
+                        <h2  class="card-title">{{latest_blog.0.title}}</h2>
                     </a>
                     <p class="card-text">
-                        {{blogs.0.blog_content|truncatewords:30}}
+                        {{latest_blog.0.blog_content|truncatewords:30}}
                     </p>
-                    <a class="btn btn-primary" href="#!">Read more →</a>
+                    <a class="btn btn-primary" href="{{latest_blog.0.get_absulate_url}}">Read more →</a>
                 </div>
             </div>
             <!-- Nested row for non-featured blog posts-->
@@ -42,7 +42,7 @@
                                 <h2 class="card-title h4">{{blog.title.title|truncatewords:5}}</h2>
                             </a>
                             <p class="card-text">{{blog.blog_content|truncatewords:30}}</p>
-                            <a class="btn btn-primary" href="#!">Read more →</a>
+                            <a class="btn btn-primary" href="{{blog.get_absulate_url}}">Read more →</a>
                         </div>
                     </div>
                 </div>

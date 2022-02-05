@@ -22,7 +22,9 @@ import uuid
 def Home(request):
     blogs=Blog.objects.all()
     blog_titles=Blog.objects.filter(published=True).order_by("-published")[:5]
-    context={"blogs":blogs,"blog_titles":blog_titles}
+    latest_blog=Blog.objects.filter(published=True).order_by("-published")
+    
+    context={"blogs":blogs,"blog_titles":blog_titles, "latest_blog":latest_blog}
     return render(request, 'Articles/blog_list.html', context)
 
 class CreateBlog(LoginRequiredMixin, CreateView):
@@ -37,6 +39,8 @@ class CreateBlog(LoginRequiredMixin, CreateView):
         form_obj.slug=title.replace(" ", "-") +"-"+ str(uuid.uuid4())
         form_obj.save()
         return redirect(reverse_lazy('Articles:Home'))
+
+        
 @login_required
 def aticle_details(request,slug):
     blog=Blog.objects.get(slug=slug)
@@ -49,7 +53,7 @@ def aticle_details(request,slug):
         comments.save()
         return HttpResponseRedirect(reverse("Articles:aticle_details", kwargs={'slug':slug}))
         
-    comments=comment.objects.all()
+    comments=comment.objects.filter(blog=blog)
     already_like=like.objects.filter(blog=blog, user=request.user)
     if already_like:
         liked=True

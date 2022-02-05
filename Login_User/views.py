@@ -3,8 +3,10 @@ from django.urls import reverse_lazy, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from Login_User.models import UserProfile
-from Articles.models import Blog
+from Articles.models import Blog, comment
 from django.contrib.auth import authenticate, login as auth_login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView, View
 
 
 def login(request):
@@ -96,10 +98,26 @@ def update_user(request,username):
         phone=request.POST.get("phone")
         bio=request.POST.get("bio")
         address=request.POST.get("address")
-    
 
         user=User.objects.filter(id=user_id).update(username=username)
         UserProfile.objects.filter(pk=user_profile_info_id).update(phone=phone, bio=bio, address=address)
         return HttpResponseRedirect(reverse('Login_User:Profile', kwargs={'username':username}))
     
     return render(request, 'Login_user/UpdateProfile.html')
+
+# def EditBlog(request,pk):
+#     post=Blog.objects.filter(pk=pk)
+#     # print(post.title)
+
+#     context={"post":post}
+#     return render(request, 'Articles/edit_blog.html', context)
+
+
+class UpdateBlog(LoginRequiredMixin, UpdateView):
+    model=Blog
+    template_name='Articles/edit_blog.html'
+    fields=('title','blog_content','blog_image')
+
+    def get_success_url(self, **kwargs):
+        # return reverse_lazy("Articles:Home")
+        return reverse_lazy("Articles:aticle_details", kwargs={'slug':self.object.slug})

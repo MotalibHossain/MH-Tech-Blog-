@@ -19,7 +19,7 @@ class Blog(models.Model):
         return reverse_lazy('Articles:aticle_details', args=[self.slug])
         
     class Meta:
-        ordering = ['-publish_date',]
+        ordering = ['-publish_date']
 
     def __str__(self) -> str:
         return self.title

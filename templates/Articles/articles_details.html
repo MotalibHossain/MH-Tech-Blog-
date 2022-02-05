@@ -7,9 +7,9 @@
 
 {% block body %}
     <div class="blog-single gray-bg">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row align-items-start">
-            <div class="col-lg-8 m-15px-tb">
+            <div class="col-lg-9 m-15px-tb">
                 <article class="article">
                     <div class="article-img">
                         <img src="/media/{{blog.blog_image}}" alt="article-image">
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                 </article>
-                <div class="row">
+                <div class="row me-5 ms-5">
                     {% for i in comments %}
                     <div class="article-comment mb-3">
                         <div class="col-lg-6">
@@ -93,7 +93,7 @@
                     </form>
                 </div>
             </div>
-            <div class="col-lg-4 m-15px-tb blog-aside">
+            <div class="col-lg-3 m-15px-tb blog-aside">
                 <!-- Author -->
                 <div class="widget widget-author">
                     <div class="widget-title">
