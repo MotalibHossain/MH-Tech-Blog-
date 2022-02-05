@@ -1,5 +1,5 @@
 <center>
-<h1>Tech Blog Sebsite</h1>
+<h1>Tech Blog Website</h1>
 <hr>
 </center>
 

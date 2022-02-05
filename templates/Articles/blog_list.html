@@ -6,22 +6,22 @@
 {% endblock%} {% block body%}
 
 <!-- Page content-->
-<div class="container">
+<div class="container-fluid">
     <div class="row mt-5">
         <!-- Blog entries-->
         <div class="col-lg-9 col-md-9 col-sm-9">
             <!-- Featured blog post-->
             <div class="card mb-4">
-                <a href="#!"
-                    ><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..."
-                /></a>
+                <a class="card_image" href="#!"
+                    ><img class="card-img-top" src="media/{{blogs.0.blog_image}}" alt="..."/>
+                </a>
                 <div class="card-body">
                     <div class="small text-muted">January 1, 2021</div>
-                    <h2 class="card-title">{{blog.0.title}}</h2>
+                    <a href="#">
+                        <h2  class="card-title">{{blogs.0.title}}</h2>
+                    </a>
                     <p class="card-text">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos
-                        cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus
-                        possimus, veniam magni quis!
+                        {{blogs.0.blog_content|truncatewords:30}}
                     </p>
                     <a class="btn btn-primary" href="#!">Read more →</a>
                 </div>
@@ -32,17 +32,15 @@
                 <div class="col-lg-6">
                     <!-- Blog post-->
                     <div class="card mb-4">
-                        <a href="#!">
-                            <img
-                                class="card-img-top"
-                                src="media/{{blog.blog_image}}"
-                                alt="{{blog.blog_image}}"
-                                title="{{blog.title}}"
+                        <a class="card_image" href="#!">
+                            <img class="card-img-top" src="media/{{blog.blog_image}}" alt="{{blog.blog_image}}" title="{{blog}}"
                             />
                         </a>
                         <div class="card-body">
                             <div class="small text-muted">{{blog.publish_date}}</div>
-                            <h2 class="card-title h4">{{blog.title}}</h2>
+                            <a href="{{blog.get_absulate_url}}">
+                                <h2 class="card-title h4">{{blog.title.title|truncatewords:5}}</h2>
+                            </a>
                             <p class="card-text">{{blog.blog_content|truncatewords:30}}</p>
                             <a class="btn btn-primary" href="#!">Read more →</a>
                         </div>
@@ -68,26 +66,13 @@
         </div>
         <!-- Side widgets-->
         <div class="col-lg-3 col-md-3 col-sm-3">
-            <div class="mb-5">
+            <div class="mb-5 title_text">
+                {% for title in blog_titles %}
                 <li>
-                    <a href="#"> This is first </a>
+                    <a href="{{title.get_absulate_url}}"> {{title.title|truncatewords:10}} </a>
                 </li>
                 <hr />
-                <li>
-                    <a href="#"> This is first </a>
-                </li>
-                <hr />
-                <li>
-                    <a href="#"> This is first </a>
-                </li>
-                <hr />
-                <li>
-                    <a href="#"> This is first </a>
-                </li>
-                <hr />
-                <li>
-                    <a href="#"> This is first </a>
-                </li>
+                {% endfor %}
             </div>
             <hr style="color: brown; height: 3px" />
             <!-- Search widget-->

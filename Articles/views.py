@@ -1,7 +1,10 @@
-from django.http import HttpResponse
+import imp
+from multiprocessing import context
+from django.http import HttpResponse, HttpResponseRedirect
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from Articles.models import Blog, comment, like
@@ -12,11 +15,15 @@ import uuid
 
 
 # Create your views here.
-class Home(ListView):
-    context_object_name='blogs'
-    model=Blog
-    template_name='Article/blog_list.html'
-
+# class Home(ListView):
+#     context_object_name='blogs'
+#     model=Blog
+#     template_name='Article/blog_list.html'
+def Home(request):
+    blogs=Blog.objects.all()
+    blog_titles=Blog.objects.filter(published=True).order_by("-published")[:5]
+    context={"blogs":blogs,"blog_titles":blog_titles}
+    return render(request, 'Articles/blog_list.html', context)
 
 class CreateBlog(LoginRequiredMixin, CreateView):
     model=Blog
@@ -30,3 +37,11 @@ class CreateBlog(LoginRequiredMixin, CreateView):
         form_obj.slug=title.replace(" ", "-") +"-"+ str(uuid.uuid4())
         form_obj.save()
         return redirect(reverse_lazy('Articles:Home'))
+@login_required
+def aticle_details(request,slug):
+    blog=Blog.objects.get(slug=slug)
+
+        
+    comments=comment.objects.all()
+    context={"blog":blog, "comments":comments}
+    return render(request, 'Articles/articles_details.html', context)

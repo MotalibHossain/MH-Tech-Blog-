@@ -1,6 +1,28 @@
-/* .card-text{
-    max-width: 600px;
-    white-space: nowrap;
-    overflow: hidden !important;
-    text-overflow: ellipsis;
-} */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&display=swap');
+
+body{
+    color: black;
+    font-family: 'Merriweather', serif;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+li{
+    list-style: none;
+}
+.title_text a{
+    color: black;
+    text-decoration: none;
+    text-transform: capitalize;
+    font-family: 'Merriweather', serif;
+}
+.title_text a:hover{
+    color: cornflowerblue;
+}
+.card-text{
+    text-align: justify;
+}
+.card_image img{
+    height: 300px;
+}
