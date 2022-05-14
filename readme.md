@@ -19,6 +19,6 @@
 - [x] Show User profile after login.
 - [x] user can update their profile.
 - [x] Blog Home page.
-- [ ] create a blog post.
-- [ ] show the blog details page.
-- [ ] any one can do like and comment in a post.
+- [x] create a blog post.
+- [x] show the blog details page.
+- [x] any one can do like and comment in a post.
